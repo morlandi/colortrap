@@ -8,8 +8,12 @@ Manual setup
 
 .. code:: bash
 
-    mkvirtualenv colortrap
+    mkvirtualenv --python=/usr/local/bin/python3 colortrap
     pip install -r requirements.txt
+
+    python manage.py migrate
+    python manage.py createsuperuser
+    	... admin + password
 
 Run development web server
 --------------------------
@@ -20,4 +24,5 @@ Run development web server
     cd colortrap
     python manage.py runserver
 
-    http://127.0.0.1:8000/ ...
+    http://127.0.0.1:8000/ or, ...
+    http://127.0.0.1:8000/admin/ ...    
