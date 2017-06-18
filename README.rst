@@ -6,6 +6,8 @@ more to write here ...
 Manual setup
 ------------
 
+.. code:: bash
+
     mkvirtualenv colortrap
     pip install -r requirements.txt
 
