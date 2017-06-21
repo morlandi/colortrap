@@ -5,4 +5,4 @@ from .models import Message
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
 
-    list_display = ['id', 'subject', 'body', 'date', ]
+    list_display = ['date', 'subject', 'body', ]
