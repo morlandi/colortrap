@@ -6,3 +6,4 @@ from .models import Message
 class MessageAdmin(admin.ModelAdmin):
 
     list_display = ['date', 'subject', 'body', ]
+    date_hierarchy = 'date'

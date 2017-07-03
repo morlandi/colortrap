@@ -1,14 +1,19 @@
-<h1>Homepage</h1>
+{% extends 'base.html' %}
 
-<h2>header2</h2>
+{% block content %}
 
-<ul>
-    <li>aaaaa</li>
-    <li>bbb</li>
-    <li>cccccc</li>
-    <li>dddd</li>
-</ul>
 
-La data odiera e': {{date}}<br>
+	<h1>Homepage</h1>
 
-<a href="/contacts/">Contacts</a>
+	<h2>header2</h2>
+
+	<ul>
+	    <li>aaaaa</li>
+	    <li>bbb</li>
+	    <li>cccccc</li>
+	    <li>dddd</li>
+	</ul>
+
+	La data odierna e': {{date}}<br>
+
+{% endblock content %}
