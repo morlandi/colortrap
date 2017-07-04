@@ -1,7 +1,7 @@
 import datetime
+from uuid import uuid4 
 from django.shortcuts import render
 from django.http import HttpResponse
-
 
 def homepage(request):
     return render(request, "home.html", {
@@ -17,3 +17,7 @@ def about(request):
     return render(request, "about.html", {
     })
 
+def uuid(request):
+    return render(request, "uuid.html", {
+        'new_uuid': str(uuid4()),
+    })
