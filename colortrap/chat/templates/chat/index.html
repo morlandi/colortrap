@@ -7,8 +7,26 @@
 
 	<ul>
 		{% for message in messages %}
-			<li>{{ message }}</li>
+			<li class="message">
+				<div class="subject">{{ message.subject }}</div>
+				<div class="date">{{ message.date }}</div>
+				<div class="body">{{ message.body }}</div>
+			</li>
 		{% endfor %}
-	</ul>	
+	</ul>
+
+	<hr>
+	<div>Nuovo messaggio:</div>
+	<form action="" method="POST">
+
+		<label>Subject:</label>
+		<input type="text" name="subject"></input>
+		<br />
+		<label>Message:</label>
+		<textarea name="body"></textarea>
+		<br />
+		<input type="submit" value="Salva"></input>
+
+	</form>	
 
 {% endblock content %}
