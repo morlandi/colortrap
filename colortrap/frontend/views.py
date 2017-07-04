@@ -10,8 +10,10 @@ def homepage(request):
 
 
 def contacts(request):
-    return HttpResponse("""
-<h1>Contacts</h1>...
-<a href="/">Home</a>
-""")
+    return render(request, "contacts.html", {
+    })
+
+def about(request):
+    return render(request, "about.html", {
+    })
 
