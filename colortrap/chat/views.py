@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Message
 from django.views.decorators.csrf import csrf_exempt
-import ipdb
 
 # Create your views here.
 
