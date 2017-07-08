@@ -1,0 +1,36 @@
+{% extends 'samples/base.html' %}
+
+
+{% block content %}
+	<h1>Samples</h1>
+
+
+	<ul>
+		{% for sample in samples %}
+			<li class="samples">
+				<div class="date">{{ sample.date }}</div>
+				<div class="value">{{ sample.value }}</div>
+			</li>
+		{% endfor %}
+	</ul>
+
+
+
+{% endblock content %}
+
+{% block footer %}
+	<div id="sample-form">
+		<div>New sample:</div>
+		<form action="" method="POST">{% csrf_token %}
+
+			<label>Sample:</label>
+			<input type="numeric" name="value"></input>
+			<br />
+			<input type="submit" value="Send"></input>
+
+		</form>
+	</div>
+
+	{{ block.super }}
+
+{% endblock footer %}
