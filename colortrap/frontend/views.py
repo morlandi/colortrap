@@ -8,7 +8,6 @@ def homepage(request):
         'date': datetime.datetime.now()
     })
 
-
 def contacts(request):
     return render(request, "contacts.html", {
     })
