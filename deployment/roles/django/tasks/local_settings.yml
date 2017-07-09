@@ -1,11 +1,19 @@
 
-- name: Create default settings file
+- name: Create default local settings file
   template: >
       src=local.py
       dest={{django.settings_file}}
       owner={{user.username}}
       group={{user.usergroup}}
       force=no
+
+- name: Create sample local settings file
+  template: >
+      src=local.py
+      dest={{django.settings_file}}.sample
+      owner={{user.username}}
+      group={{user.usergroup}}
+      force=yes
 
 - name: Create "setenv" script
   template: >
