@@ -21,7 +21,6 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..',))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '95&wwzfhf+i=u%c2*bc+#s^28_s=a$_vtuslr1$^omfoano6m_'
 SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -78,12 +77,12 @@ WSGI_APPLICATION = 'colortrap.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

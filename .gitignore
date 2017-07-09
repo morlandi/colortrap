@@ -7,7 +7,7 @@
 *.pyc
 
 colortrap/__pycache__/
-colortrap/local_settings.py
+colortrap/settings/local.py
 colortrap/db.sqlite3
 colortrap/media
 
