@@ -15,7 +15,7 @@
   supervisorctl: name={{item}} state=restarted
   with_items:
     #- gunicorn_{{project}}
-    - "{{project_owner}}_{{project}}_gunicorn"
+    - "{{project_owner}}_gunicorn"
 
 # - name: restart web frontend
 #   file: >
@@ -32,7 +32,7 @@
   supervisorctl: name={{item}} state=present
   sudo_user: root
   with_items:
-    - "{{project_owner}}_{{project}}_gunicorn"
+    - "{{project_owner}}_gunicorn"
   notify:
     - restart supervised services
 
@@ -43,7 +43,7 @@
   sudo_user: root
   supervisorctl: name={{item}} state=restarted
   with_items:
-    - "{{project_owner}}_{{project}}_gunicorn"
+    - "{{project_owner}}_gunicorn"
 
 
 - name: restart all frontend services
@@ -51,9 +51,8 @@
   sudo_user: root
   with_items:
     - nginx
-    #- uwsgi
   notify:
-    - restart uwsgi
+    #- restart uwsgi
     #- restart gunicorn
     - restart supervised services
 
