@@ -1,0 +1,43 @@
+#
+#  Sample usage:
+#  $ ansible-playbook -v -i hosts --limit brainstorm.it --user=brainweb -k quick_update.yml
+#
+
+---
+- hosts: servers
+  gather_facts: False
+  #sudo_user: "{{project_owner}}"
+
+  tasks:
+
+    - name: Pull sources from the repository.
+      git: >
+          repo={{django.repo}}
+          dest={{django.root}}/{{project}}/
+          version={{branch}}
+          accept_hostkey=True
+      notify:
+          - restart workers
+
+    - name: Upgrade the virtualenv.
+      pip: >
+          virtualenv={{django.virtualenv}}
+          requirements={{django.root}}/{{project}}/requirements/production.txt
+
+    - name: Run django management commands
+      django_manage: >
+          command={{item}}
+          app_path={{django.root}}/{{project}}
+          settings={{django.settings}}
+          virtualenv={{django.virtualenv}}
+          pythonpath={{django.pythonpath}}
+      with_items:
+        - migrate
+        - collectstatic
+
+  vars_files:
+      - vars.yml
+
+  handlers:
+     - name: restart workers
+       command: "{{django.root}}/kill_project_workers.bash"

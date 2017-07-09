@@ -1,0 +1,32 @@
+---
+
+- include: install_packages.yml
+- include: pull_from_repo.yml
+- include: local_settings.yml
+- include: run_management_commands.yml
+- include: setup_frontend.yml
+- include: setup_uwsgi.yml
+  when: not django.use_gunicorn
+- include: setup_gunicorn_and_supervisor.yml
+  when: django.use_gunicorn
+
+#
+# Eventually remove unwanted files when switching from uWsgi to Gunicorn
+#
+
+#- name: Disable uswgi configuration file
+#  sudo_user: root
+#  file: >
+#      dest=/etc/uwsgi/apps-enabled/{{project_owner}}_{{project}}.ini
+#      state=absent
+#  notify:
+#    - restart all frontend services
+
+#- name: Remove Supervisord configuration file
+#  sudo_user: root
+#  file: >
+#      dest=/etc/supervisor/conf.d/{{project_owner}}_{{project}}.conf
+#      state=absent
+#  when: not django.use_gunicorn
+#  notify:
+#    - restart all frontend services

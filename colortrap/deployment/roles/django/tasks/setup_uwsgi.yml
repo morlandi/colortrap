@@ -1,0 +1,33 @@
+
+- name: Create folder for uwsgi configuration file and link
+  file: >
+    path={{item}}
+    state=directory
+    owner=root
+    group=root
+  sudo_user: root
+  with_items:
+    - /etc/uwsgi
+    - /etc/uwsgi/apps-available
+    - /etc/uwsgi/apps-enabled
+
+- name: Install uwsgi configuration file
+  template: >
+      src=uwsgi.ini
+      dest=/etc/uwsgi/apps-available/{{project_owner}}_{{project}}.ini
+  sudo_user: root
+  notify:
+    - restart all frontend services
+
+- name: Enable uwsgi configuration file
+  file: >
+      src=/etc/uwsgi/apps-available/{{project_owner}}_{{project}}.ini
+      dest=/etc/uwsgi/apps-enabled/{{project_owner}}_{{project}}.ini
+      owner=root
+      group=root
+      state=link
+  sudo_user: root
+  when: not django.use_gunicorn
+  notify:
+    - restart all frontend services
+

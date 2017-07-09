@@ -1,0 +1,26 @@
+
+- name: Create Gunicorn configuration file
+  template: >
+      src=gunicorn.conf.py
+      dest={{django.website_home}}
+
+- name: Create start script for Gunicorn
+  template: >
+      src=start_gunicorn.sh
+      mode=0744
+      dest={{django.website_home}}
+
+- name: Create Supervisord configuration file
+  sudo_user: root
+  template: >
+      src=supervisor.conf
+      dest=/etc/supervisor/conf.d/{{project_owner}}.conf
+  notify:
+    - add supervised services
+    - restart all frontend services
+
+- name: Create logrotate configuration file
+  sudo_user: root
+  template: >
+      src=logrotate.conf
+      dest=/etc/logrotate.d/{{project_owner}}

@@ -1,0 +1,17 @@
+- name: Copy dump_remote_data script
+  template:
+      src=dump_remote_data.sh
+      dest=/home/{{user.username}}/dumps/dump_remote_data.sh
+      mode=0744
+      owner={{user.username}}
+      group={{user.usergroup}}
+      force=no
+
+- name: Copy dump_local_data script
+  template:
+      src=dump_local_data.sh
+      dest=/home/{{user.username}}/dumps/dump_local_data.sh
+      mode=0744
+      owner={{user.username}}
+      group={{user.usergroup}}
+      force=no

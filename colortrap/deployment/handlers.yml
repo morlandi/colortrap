@@ -1,0 +1,65 @@
+---
+- name: restart postgresql
+  service: name=postgresql state=restarted
+
+- name: restart nginx
+  service: name=nginx state=restarted
+  sudo_user: root
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+  sudo_user: root
+
+- name: restart uwsgi
+  service: name=uwsgi state=restarted
+  sudo_user: root
+  when: not django.use_gunicorn
+
+- name: restart gunicorn
+  sudo_user: root
+  supervisorctl: name={{item}} state=restarted
+  with_items:
+    #- gunicorn_{{project}}
+    - "{{project_owner}}_{{project}}_gunicorn"
+  when: django.use_gunicorn
+
+# - name: restart web frontend
+#   file: >
+#     path=/etc/uwsgi/apps-available/{{project}}.ini
+#     state=touch
+#   notify:
+#     - restart all frontend services
+
+# When state = present,
+#     the module will call supervisorctl reread then supervisorctl add
+#     if the program/group does not exist.
+#
+- name: add supervised services
+  supervisorctl: name={{item}} state=present
+  sudo_user: root
+  with_items:
+    - "{{project_owner}}_{{project}}_gunicorn"
+  notify:
+    - restart supervised services
+
+# When state = restarted,
+#     the module will call supervisorctl update then call supervisorctl restart.
+#
+- name: restart supervised services
+  sudo_user: root
+  supervisorctl: name={{item}} state=restarted
+  with_items:
+    - "{{project_owner}}_{{project}}_gunicorn"
+
+
+- name: restart all frontend services
+  service: name={{item}} state=restarted
+  sudo_user: root
+  with_items:
+    - nginx
+    #- uwsgi
+  notify:
+    - restart uwsgi
+    #- restart gunicorn
+    - restart supervised services
+

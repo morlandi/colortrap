@@ -1,0 +1,17 @@
+
+- name: Upgrade the virtualenv.
+  pip: >
+      virtualenv={{django.virtualenv}}
+      requirements={{django.root}}/{{project}}/requirements/production.txt
+
+- name: Run django management commands
+  django_manage: >
+      command={{item}}
+      app_path={{django.root}}/{{project}}
+      settings={{django.settings}}
+      virtualenv={{django.virtualenv}}
+      pythonpath={{django.pythonpath}}
+  with_items:
+    - migrate
+    - collectstatic
+    #- create_initial_admin_user

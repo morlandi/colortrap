@@ -1,0 +1,30 @@
+##
+# Ansible playbook for setting up a Django project on Ubuntu 12.04
+#
+
+---
+- hosts: servers
+  #user: root
+  #user: morlandi
+  #remote_user: root
+  sudo: yes
+  gather_facts: True
+
+  vars_files:
+    - vars.yml
+
+  roles:
+    - { role: server_setup, tags: ['server_setup' ] }
+    - { role: user, tags: ['user', ] }
+    #- { role: postgresql, tags: ['postgresql', ] }
+    #- { role: nginx, tags: ['nginx', ] }
+    # - { role: uwsgi, tags: ['uwsgi', ], when: "django.use_gunicorn != True"  }
+    #- { role: redis, tags: ['redis', ] }
+    - { role: database, tags: ['database', ] }
+    - { role: utils, tags: ['utils', ] }
+    #- { role: passwordless_ssh_login, tags: ['passwordless_ssh_login', ], when: debugtools }
+    - { role: django, sudo_user: "{{project_owner}}", tags: ['django', ] }
+    #- { role: supervisor, tags: ['supervisor', ] }
+
+  handlers:
+    - include: handlers.yml

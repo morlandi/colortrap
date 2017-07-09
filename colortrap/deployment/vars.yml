@@ -1,0 +1,56 @@
+---
+
+home: '/home/{{username}}'
+project: "colortrap"
+project_owner: "{{username}}"
+protected: False
+
+server_setup:
+    locale: en_US.UTF-8
+
+system_packages:
+    - unzip
+    - git
+    - python-pip
+    - python-virtualenv
+    - libfreetype6-dev
+    - libjpeg8-dev
+    - libffi-dev
+
+user:
+    username: "{{project_owner}}"
+    usergroup: '{{project}}'
+
+database:
+    db_password: 'E29f81869ec6242e'
+    db_user: "{{username}}"
+    db_name: "{{username}}"
+    db_encoding: 'UTF-8'
+    db_enablepostgis: False
+    db_enableuuidossp: True
+
+django:
+
+    secret_key: '95&wwzfhf+i=u%c2*bc+#s^28_s=a$_vtuslr1$^omfoano6m_'
+    repo: git@github.com:morlandi/colortrap.git
+    server_email: 'info@brainstorm.it'
+    default_from_email: 'brainstorm.smtp@gmail.com'
+    email_subject_prefix: '[Colortrap] '
+    site_name: 'Colortrap'
+    admins:
+        -
+            - 'Support'
+            - 'info@brainstorm.it'
+    session_cookie_name: '{{project_owner}}_{{project}}_sid'
+
+    socketfile: "{{home}}/run/gunicorn.sock"
+    root: "{{home}}"
+    logto: "{{home}}/logs"
+    website_home: "{{home}}/{{project}}"
+    static_root: "{{home}}/public/static"
+    media_root: "{{home}}/public/media"
+    virtualenv: "{{home}}/python"
+    pythonpath: "{{home}}/python/bin"
+    settings_file: "{{home}}/{{project}}/{{project}}/settings/local.py"
+    settings: "{{project}}.settings"
+    use_gunicorn: True

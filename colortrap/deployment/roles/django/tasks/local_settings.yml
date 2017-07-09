@@ -1,0 +1,19 @@
+
+- name: Create default settings file
+  template: >
+      src=local.py
+      dest={{django.settings_file}}
+      owner={{user.username}}
+      group={{user.usergroup}}
+      force=no
+
+- name: Create "setenv" script
+  template: >
+      src=setenv.sh
+      dest={{django.root}}
+
+- name: Create "kill_project_workers.bash" scripts
+  template: >
+      src=kill_project_workers.bash
+      dest={{django.root}}
+      mode=a+x

@@ -1,0 +1,6 @@
+database:
+  db_user: 'test_dbuser'
+  db_name: 'test_dbname'
+  db_password: 'test_dbpassword'
+  db_enablepostgis: False
+  db_encoding: 'UTF-8'

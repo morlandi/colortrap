@@ -1,0 +1,9 @@
+
+- name: Pull sources from the repository.
+  git: >
+      repo={{django.repo}}
+      dest={{django.root}}/{{project}}/
+      version={{branch}}
+      accept_hostkey=True
+  notify:
+      - restart all frontend services

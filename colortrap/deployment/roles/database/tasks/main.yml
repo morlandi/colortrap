@@ -1,0 +1,73 @@
+---
+# Creating a PostGIS enabled database
+
+- name: ensure required packages are installed
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - python-psycopg2
+
+- name: Create Database User
+  sudo: true
+  sudo_user: postgres
+  postgresql_user: >
+    user={{ database.db_user }}
+    password={{ database.db_password }}
+    role_attr_flags=CREATEDB,NOSUPERUSER
+  when: not database.db_enablepostgis
+
+- name: Create Database User as Superuser
+  sudo: true
+  sudo_user: postgres
+  postgresql_user: >
+    user={{ database.db_user }}
+    password={{ database.db_password }}
+    role_attr_flags=CREATEDB,SUPERUSER
+  when: database.db_enablepostgis
+
+- name: Create Database.
+  sudo: true
+  sudo_user: postgres
+  postgresql_db: >
+    name={{ database.db_name }}
+    owner={{ database.db_user }}
+    login_host=localhost
+    login_user={{ database.db_user }}
+    login_password={{ database.db_password }}
+  register: create_database
+  when: not database.db_enablepostgis
+
+# > CREATE EXTENSION "uuid-ossp";
+# - name: Create uuid-ossp EXTENSION
+#   sudo: True
+#   sudo_user: postgres
+#   postgresql_ext: >
+#     name=uuid-ossp
+#     db={{ database.db_name }}
+#     state=present
+#     login_host=localhost
+#     login_user={{ database.db_user }}
+#     login_password={{ database.db_password }}
+#   when: database.db_enableuuidossp
+
+# - name: Copy default database dump
+#   sudo: true
+#   copy: src=defaultdb.sql.gz dest="/tmp/defaultdb.sql.gz"
+#   when: create_database.changed
+
+# - name: Load default database dump
+#   sudo: true
+#   sudo_user: "{{ database.db_user }}"
+#   shell: gunzip -c /tmp/defaultdb.sql.gz | psql {{ database.db_name }}
+#   when: create_database.changed
+
+- name: convert database to postgis
+  sudo: True
+  sudo_user: postgres
+  action: command psql -d {{ database.db_name }} -c "CREATE EXTENSION postgis;"
+  when: database.db_enablepostgis and create_database.changed
+
+- name: convert database to postgis topology
+  sudo: True
+  sudo_user: postgres
+  action: command psql -d {{ database.db_name }} -c "CREATE EXTENSION postgis_topology;"
+  when: database.db_enablepostgis and create_database.changed

@@ -1,0 +1,12 @@
+#user:
+#  usergroup: 'testuser'
+#  username: 'testuser'
+
+  # This encrypted password has been generated as suggested at
+  # https://github.com/ansible/ansible/issues/2305#issuecomment-14647278
+  # that is:
+  #
+  # TO BE RUN ON UBUNTU ! Not working on OS/X
+  # $ python -c 'import crypt; print crypt.crypt("testuser$$", "$5$SomeSalt$")'
+  # $5$SomeSalt$WDut7L1xb7DXJSehncvb4KnaDbQttj9xF8JXuU8afhA
+  #password: '$5$SomeSalt$WDut7L1xb7DXJSehncvb4KnaDbQttj9xF8JXuU8afhA'

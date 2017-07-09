@@ -1,0 +1,18 @@
+
+- name: Ensure required packages are installed
+  sudo_user: root
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - python-dev
+    - git
+    #- python-virtualenv
+    - python-setuptools
+    - python-psycopg2
+    - libxslt-dev
+
+- name: Ensure packages required by Supervisord are installed
+  sudo_user: root
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - supervisor
+    - python-requests

@@ -1,0 +1,22 @@
+---
+#Config Nginx and either uWsgi or Gunicorn (depending on django.use_gunicorn flag)
+
+- name: Install nginx configuration file
+  template: >
+    src=nginx.conf
+    dest=/etc/nginx/sites-available/{{project_owner}}_{{project}}.conf
+  sudo_user: root
+  notify:
+    - restart all frontend services
+
+- name: Enable nginx configuration file
+  file: >
+      src=/etc/nginx/sites-available/{{project_owner}}_{{project}}.conf
+      dest=/etc/nginx/sites-enabled/{{project_owner}}_{{project}}.conf
+      owner=root
+      group=root
+      state=link
+  sudo_user: root
+  notify:
+    - restart all frontend services
+
