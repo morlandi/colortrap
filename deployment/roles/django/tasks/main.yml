@@ -5,10 +5,7 @@
 - include: local_settings.yml
 - include: run_management_commands.yml
 - include: setup_frontend.yml
-- include: setup_uwsgi.yml
-  when: not django.use_gunicorn
 - include: setup_gunicorn_and_supervisor.yml
-  when: django.use_gunicorn
 
 #
 # Eventually remove unwanted files when switching from uWsgi to Gunicorn

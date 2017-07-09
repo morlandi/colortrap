@@ -10,18 +10,12 @@
   service: name=nginx state=reloaded
   sudo_user: root
 
-- name: restart uwsgi
-  service: name=uwsgi state=restarted
-  sudo_user: root
-  when: not django.use_gunicorn
-
 - name: restart gunicorn
   sudo_user: root
   supervisorctl: name={{item}} state=restarted
   with_items:
     #- gunicorn_{{project}}
     - "{{project_owner}}_{{project}}_gunicorn"
-  when: django.use_gunicorn
 
 # - name: restart web frontend
 #   file: >

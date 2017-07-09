@@ -53,4 +53,3 @@ django:
     pythonpath: "{{home}}/python/bin"
     settings_file: "{{home}}/{{project}}/{{project}}/settings/local.py"
     settings: "{{project}}.settings"
-    use_gunicorn: True
