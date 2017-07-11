@@ -5,7 +5,7 @@ void setup()
   Serial.begin(115200);
   Serial.println();
 
-  WiFi.begin("brainstorm2", "f8c0ec8d2c");
+  WiFi.begin("brainstorm2", "********");
 
   Serial.print("Connecting");
   while (WiFi.status() != WL_CONNECTED)
