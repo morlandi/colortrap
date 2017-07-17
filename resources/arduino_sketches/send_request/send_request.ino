@@ -1,4 +1,5 @@
 
+#include <string.h>
 
 void setup() {                
     Serial.begin(9600);
@@ -10,10 +11,11 @@ void trace(char* message)
 }
 
 
-bool send_command(char* szCommand, char* szSuccessMarker, char* szFailureMarker, long timeout)
+bool send_command(char* szCommand, char* szSuccessMarker, char* szFailureMarker, long timeout, String& response)
 {
-    String response;
-
+    // Clear response
+    response = "";
+  
     // Sent command to remote device
     Serial.println(szCommand);
 
@@ -33,15 +35,14 @@ bool send_command(char* szCommand, char* szSuccessMarker, char* szFailureMarker,
                 new_chars_received = true;
             }
 
-
           // Check for complete response, and in case return either true (for success)
           // or false (for error)
           if (new_chars_received) 
           {
-            if (strstr(szSuccessMarker, response.c_str())) {
+            if (strstr(response.c_str(), szSuccessMarker)) {
               return true;
             }
-            if (strstr(szFailureMarker, response.c_str())) {
+            if (strstr(response.c_str(), szFailureMarker)) {
               return false;
             }
           }
@@ -59,15 +60,20 @@ bool send_command(char* szCommand, char* szSuccessMarker, char* szFailureMarker,
 
 void loop() 
 {
+    String response;
+    char* request = "prova";
+  
     trace("<-- send new command");
-    if (send_command("prova", "OK", "ERROR", 10000))
+    if (send_command(request, "OK", "ERROR", 10000, response))
     {
-            trace("--> success");
+        trace("--> success");
     }
       else
     {
-            trace("--> failure");
+        trace("--> failure");
     }
+    trace("Response was:");
+    trace(response.c_str());
     
     delay(1000);
 }
