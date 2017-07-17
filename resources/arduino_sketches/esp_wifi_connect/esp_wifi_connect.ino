@@ -9,13 +9,13 @@
 SoftwareSerial esp8266(2,3);
 
 String ssid = "brainstorm2";
-String password = "********";
+String password = "*******";
 
 // AT+CWJAP_CUR="brainstorm2","*********"
 String wifi_connection_string = "AT+CWJAP_CUR=\"" + ssid + "\",\"" + password + "\"";
 
 
-void echo_received_chars(SoftwareSerial& esp_obj) 
+void echo_received_chars(SoftwareSerial& esp_obj)
 {
     while( esp_obj.available() )
     {
@@ -25,13 +25,13 @@ void echo_received_chars(SoftwareSerial& esp_obj)
     }
 }
 
-void wifi_connect() 
+void wifi_connect()
 {
     Serial.println("Establishing wifi connection ...");
 
     esp8266.println("AT+RST");
     delay(3000);
-  
+
     esp8266.println("AT+CWMODE_CUR=1");
     delay(3000);
     echo_received_chars(esp8266);
