@@ -8,11 +8,12 @@
 // and the RX line from the esp to the Arduino's pin 3
 SoftwareSerial esp8266(2,3);
 
-String ssid = "brainstorm2";
-String password = "**********";
+String SSID = "brainstorm2";
+String PASSWORD = "*********";
+String SERVER = "colortrap.brainstorm.it";
 
 // AT+CWJAP_CUR="brainstorm2","*********"
-String wifi_connection_string = "AT+CWJAP_CUR=\"" + ssid + "\",\"" + password + "\"";
+String wifi_connection_string = "AT+CWJAP_DEF=\"" + SSID + "\",\"" + PASSWORD + "\"";
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Helpers
@@ -48,7 +49,7 @@ bool send_request(SoftwareSerial& device, char* szRequest, String& response, lon
     device.println(szRequest);
 
     // wait for complete response
-    int n = 100;
+    int n = 1000;
     long dt = timeout / n;
     for (int i=0; i<n; i++)
     {
@@ -96,7 +97,6 @@ bool send_request(SoftwareSerial& device, char* szRequest, String& response, lon
 // end of Helpers
 /////////////////////////////////////////////////////////////////////////////////////
 
-
 bool wifi_connect()
 {
     Serial.println("Establishing wifi connection ...");
@@ -105,13 +105,44 @@ bool wifi_connect()
     bool verbose = true;
 
     send_request(esp8266, "AT+RST", response, 3000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
-        delay(3000);
+    delay(10000);
 
     send_request(esp8266, "AT+CWMODE_CUR=1", response, 3000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
-    delay(3000);
 
-    return send_request(esp8266, wifi_connection_string.c_str(), response, 3000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
+    return send_request(esp8266, wifi_connection_string.c_str(), response, 10000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
+
 }
+
+bool http_post(SoftwareSerial& device, int value)
+{
+    String request = "AT+CIPSTART=\"TCP\",\"" + SERVER + "\",80";
+    String response;
+    bool verbose = true;
+    
+    send_request(esp8266, request.c_str(), response, 10000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
+
+    String str_value = String(value);
+    int length = 6 + str_value.length();
+    request = "POST /samples/ HTTP/1.0\r\nHost: " + SERVER + "\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ";
+    request += String(length);
+    request += "\r\n\r\nvalue=";
+    request += str_value;
+
+    
+    trace("Sending: ");
+    trace(request.c_str());
+
+    device.print("AT+CIPSEND=");
+    device.println(request.length());
+    delay(500);
+    device.print(request);
+
+    trace(request.c_str());  
+
+    send_request(esp8266, "AT+CIPCLOSE", response, 10000, "\r\nOK\r\n", "\r\nERROR\r\n", verbose);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 void setup()
 {
@@ -121,18 +152,17 @@ void setup()
     unsigned long t0 = millis();
     bool connected = wifi_connect();
     unsigned long t1 = millis();
-
     Serial.println("elapsed time [s]:");
     Serial.println((t1 - t0)/1000.0);
-
     Serial.println(connected ? "Esp8266 connected at 9600 baudrate and waiting for AT commands ..." : "Connection failure");
 }
 
 
-String command = "";
+int i = 0;
 
 void loop()
 {
+    /*
     echo_received_chars(esp8266);
 
     while( Serial.available() )
@@ -146,4 +176,9 @@ void loop()
            command = "";
         }
     }
+    */
+
+    i = i + 1;
+    http_post(esp8266, i);
+    delay(10000);
 }
