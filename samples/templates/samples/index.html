@@ -4,17 +4,20 @@
 {% block content %}
 	<h1>Samples</h1>
 
-
-	<ul>
+	<table class="sample-grid">
+		<tr>
+			<th>Data</th>
+			<th>Value</th>
+			<th>Color</th>
+		</tr>
 		{% for sample in samples %}
-			<li class="samples">
-				<div class="date">{{ sample.date }}</div>
-				<div class="value">{{ sample.value }}</div>
-			</li>
+		<tr>
+			<td class="date">{{ sample.date|date:'d/m/Y H:i:s' }}</td>
+			<td class="value">{{ sample.value }}</td>
+			<td class="tile" style="background-color: #ff6;"></td>
+		</tr>
 		{% endfor %}
-	</ul>
-
-
+	</table>
 
 {% endblock content %}
 

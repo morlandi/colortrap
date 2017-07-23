@@ -8,13 +8,10 @@ def index(request):
 
     if request.method == 'POST':
 
-        try:
-            value = float(request.POST['value'])
-            Sample.objects.create(
-                value=value,
-            )
-        except:
-            pass
+        value = request.POST['value']
+        Sample.objects.create(
+            value=value,
+        )
 
     else:
         pass
