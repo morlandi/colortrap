@@ -1,6 +1,10 @@
 Colortrap
 =========
 
+.. image:: resources/docs/colortrap0.jpg
+
+.. image:: resources/docs/colortrap1.jpg
+
 more to write here ...
 
 Manual setup
