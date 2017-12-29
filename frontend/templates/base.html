@@ -1,88 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>ColorTrap</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="text/javascript" src="script.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
     <style>
-
-	    body {
-	    	background-color: #08E;
-	    	margin: 0;
-	    	padding: 0;
-	    	color: #000;
-	    }
-
-    	.header {
-    		background-color: #000;
-    		color: white;
-    		padding: 5px;
-    	}
-
-    	.header a,
-    	.header a:visited {
-    		color: white;
-    	}
-
-    	.footer {
-    		border-top: 1px solid black;
-    		background-color: gray;
-    		bottom: 0;
-    		position: fixed;
-    		width: 100%;
-    		color: white;
-    	}
-
-    	.content {
-    		padding: 20px;
-    	}
-
-	    h1 {
-	    	background-color: #02C;
-	    	color: white;
-	    	border: 3px solid black;
-	    	margin: 3px;
-	    	padding: 20px;
-	    }
-
-    	li {
-    		color: white;
-    	}
-
+      body {
+        padding-top: 70px;
+      }
     </style>
-
-    {% block extrastyle %}
-    {% endblock extrastyle %}
 
   </head>
   <body>
 
-  		<div class="header">
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">ColorTrap</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
 
-  			<div class="nav">
-  				<a href="/">Home</a>
-  				<a href="/contacts/">Contacts</a>
-          <a href="/about/">About</a>
-          <a href="/chat/">Chat</a>
-          <a href="/uuid/">Uuid</a>
-          <a href="/samples/">Samples</a>
-  			</div>
+          {% include 'navigation.html' %}
 
-  		</div>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
 
-  		<div class="content">
-  			{% block content %}
-  				<div>Content goes here ...</div>
-  			{% endblock content %}
-		</div>
+    <div class="container">
 
-		<div class="footer">
-      {% block footer %}
-			bla bla bla .. indirizzo ...
-      {% endblock footer %}
-		</div>
+      <div class="row row-offcanvas row-offcanvas-right">
 
+        {% block content %}
+              <div>Content goes here ...</div>
+        {% endblock content %}
+
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
+
+    </div><!--/.container-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="/static/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
   </body>
 </html>
