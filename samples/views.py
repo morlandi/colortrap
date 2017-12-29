@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Sample
+from .models import Calibration
 from django.views.decorators.csrf import csrf_exempt
 #Create your views here.
 
@@ -18,6 +19,12 @@ def index(request):
 
     return render(request, "samples/index.html", {
         'samples': Sample.objects.all().order_by('-date'),
-
-
     })
+
+
+def list_calibrations(request):
+    calibrations = Calibration.objects.all().order_by('-date')
+    return render(request, "samples/calibration/list.html", {
+        'calibrations': calibrations,
+    })
+

@@ -1,0 +1,13 @@
+{% extends 'samples/base.html' %}
+
+{% block content %}
+    <h1>Calibrations</h1>
+
+    <ul>
+    {% for calibration in calibrations %}
+        <li>{{ calibration }}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}
+
