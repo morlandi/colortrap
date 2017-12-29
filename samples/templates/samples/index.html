@@ -9,19 +9,24 @@
 			<th>Data</th>
 			<th>Value</th>
 			<th>Color</th>
+			<th>Calibration</th>
+			<th>Position</th>
 		</tr>
 		{% for sample in samples %}
 		<tr>
 			<td class="date">{{ sample.date|date:'d/m/Y H:i:s' }}</td>
 			<td class="value">{{ sample.value }}</td>
 			<td class="tile" style="background-color: {{sample.value}};"></td>
+			<td class="calibration">{{ sample.calibration }}</td>
+			<td class="position">{{ sample.position }}</td>
 		</tr>
 		{% endfor %}
 	</table>
 
-{% endblock content %}
-
-{% block footer %}
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 	<div id="sample-form">
 		<div>New sample:</div>
 		<form action="" method="POST">
@@ -33,6 +38,14 @@
 
 		</form>
 	</div>
+
+
+
+
+
+{% endblock content %}
+
+{% block footer %}
 
 	{{ block.super }}
 
