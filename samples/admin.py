@@ -1,5 +1,11 @@
 from django.contrib import admin
+from .models import Calibration
 from .models import Sample
+
+
+@admin.register(Calibration)
+class CalibrationAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Sample)
