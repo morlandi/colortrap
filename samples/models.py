@@ -21,3 +21,4 @@ class Sample(models.Model):
     value = models.CharField(max_length=16, null=False, blank=True)
     calibration = models.ForeignKey(Calibration, null=True, blank=True)
     position = models.IntegerField(null=True, blank=True)
+    raw = models.TextField(null=False, blank=True)
